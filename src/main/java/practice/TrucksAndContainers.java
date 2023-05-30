@@ -3,26 +3,39 @@ package practice;
 import java.util.Scanner;
 
 public class TrucksAndContainers {
+    private static final int CONTAINER_CAPACITY = 27;
+    private final static int TRUCK_CAPACITY = 12;
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        int trucksCount = 0;
+        int containersCount =0 ;
+        String sep = System.lineSeparator();
 
-        //получение количество коробок от пользователя
+        Scanner scanner = new Scanner(System.in);
         int boxes = scanner.nextInt();
 
-        // TODO: вывести в консоль коробки разложенные по грузовикам и контейнерам
-        // пример вывода при вводе 2
-        // для отступа используйте табуляцию - \t
+        if (boxes > 0) {
+            trucksCount++;
+            containersCount++;
+            System.out.println("Грузовик: " + trucksCount);
+            System.out.println("\tКонтейнер: " + containersCount);
 
-        /*
-        Грузовик: 1
-            Контейнер: 1
-                Ящик: 1
-                Ящик: 2
-        Необходимо:
-        грузовиков - 1 шт.
-        контейнеров - 1 шт.
-        */
+            for (int i = 1; i <= boxes; i++) {
+                System.out.println("\t\tЯщик: " + i);
+
+                if (i % (TRUCK_CAPACITY * CONTAINER_CAPACITY) == 0 && i!=boxes) {
+                    trucksCount++;
+                    System.out.println("Грузовик: " + trucksCount);
+                }
+
+                if (i % CONTAINER_CAPACITY == 0 && i!=boxes) {
+                    containersCount++;
+                    System.out.println("\tКонтейнер: " + containersCount);
+                }
+            }
+        }
+        System.out.println("Необходимо:" + sep +
+                "грузовиков - " + trucksCount + " шт." + sep +
+                "контейнеров - " + containersCount + " шт.");
     }
-
 }

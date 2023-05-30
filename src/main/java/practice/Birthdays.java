@@ -1,5 +1,10 @@
 package practice;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.Locale;
+
 public class Birthdays {
 
     public static void main(String[] args) {
@@ -14,10 +19,23 @@ public class Birthdays {
 
     public static String collectBirthdays(int year, int month, int day) {
 
-        //TODO реализуйте метод для построения строки в следующем виде
-        //0 - 31.12.1990 - Mon
-        //1 - 31.12.1991 - Tue
-        
-        return "";
+        var birthday = LocalDate.of(year, month, day);
+        var today = LocalDate.now();
+
+        var formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        StringBuilder s = new StringBuilder();
+        int count = 0;
+
+        while (birthday.isBefore(today) || birthday.isEqual(today)) {
+            s.append(count++)
+              .append(" - ")
+              .append(birthday.format(formatter))
+              .append(" - ")
+              .append(birthday.getDayOfWeek()
+                              .getDisplayName(TextStyle.SHORT, Locale.US))
+                              .append(System.lineSeparator());
+            birthday = birthday.plusYears(1);
+        }
+        return s.toString();
     }
 }
